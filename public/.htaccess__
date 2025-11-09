@@ -1,0 +1,143 @@
+
+RewriteOptions inherit
+Options -Indexes
+
+order deny,allow
+deny from all
+allow from 173.209.132.162
+allow from 207.35.146.162
+allow from 24.143.180.42
+allow from 70.28.61.17
+allow from 66.207.114.206
+allow from 184.145.81.48
+allow from 68.179.35.0
+allow from 174.113.73.101
+allow from 209.171.88.53
+allow from 72.143.63.66
+allow from 157.47.237.120
+allow from 103.207.171.131
+allow from 103.207.171.144
+
+
+#terry
+allow from 142.169.78.199
+
+#tyler
+allow from 142.185.28.9
+
+#edmondson
+allow from 72.139.206.98
+
+#Jeff
+allow from 142.114.59.90
+allow from 142.114.58.150
+allow from 70.30.108.106
+allow from 142.114.57.0
+allow from 70.31.20.69
+
+#Jeff
+allow from 73.23.57.20
+allow from 70.52.155.216
+
+#Kerri
+allow from 99.254.226.227
+allow from 162.222.62.85
+
+#Damion
+allow from 99.254.237.209
+
+#Ryan
+allow from 99.226.134.150
+
+#Tyler
+allow from 184.94.177.88
+
+#Bennett
+allow from 108.168.7.186
+allow from 184.94.186.234
+allow from 184.94.188.114
+allow from 185.244.212.62
+allow from 104.249.230.126
+
+#Harper
+allow from 99.254.225.22
+allow from 192.0.248.212
+allow from 103.207.171.147
+
+#Kelly
+allow from 72.140.217.77
+allow from 72.137.80.160
+
+#Frank
+allow from 99.254.215.54
+
+#Gena
+allow from 209.202.222.46
+
+#Pie
+allow from 135.23.174.238
+
+#Bes
+allow from 67.201.160.59
+
+<IfModule mod_rewrite.c>
+    #<IfModule mod_negotiation.c>
+    #    Options -MultiViews
+    #</IfModule>
+
+    RewriteEngine On
+
+    # Handle Authorization Header
+    RewriteCond %{HTTP:Authorization} .
+RewriteCond %{REQUEST_URI} !^/[0-9]+\..+\.cpaneldcv$
+RewriteCond %{REQUEST_URI} !^/\.well-known/acme-challenge/[0-9a-zA-Z_-]+$
+RewriteCond %{REQUEST_URI} !^/\.well-known/pki-validation/[A-F0-9]{32}\.txt(?:\ Comodo\ DCV)?$
+    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+    # Redirect Trailing Slashes If Not A Folder...
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_URI} (.+)/$
+RewriteCond %{REQUEST_URI} !^/[0-9]+\..+\.cpaneldcv$
+RewriteCond %{REQUEST_URI} !^/\.well-known/acme-challenge/[0-9a-zA-Z_-]+$
+RewriteCond %{REQUEST_URI} !^/\.well-known/pki-validation/[A-F0-9]{32}\.txt(?:\ Comodo\ DCV)?$
+    RewriteRule ^ %1 [L,R=301]
+    
+    RewriteCond %{HTTPS} !=on
+RewriteCond %{REQUEST_URI} !^/[0-9]+\..+\.cpaneldcv$
+RewriteCond %{REQUEST_URI} !^/\.well-known/acme-challenge/[0-9a-zA-Z_-]+$
+RewriteCond %{REQUEST_URI} !^/\.well-known/pki-validation/[A-F0-9]{32}\.txt(?:\ Comodo\ DCV)?$
+    RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+    # Handle Front Controller...
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+RewriteCond %{REQUEST_URI} !^/[0-9]+\..+\.cpaneldcv$
+RewriteCond %{REQUEST_URI} !^/\.well-known/acme-challenge/[0-9a-zA-Z_-]+$
+RewriteCond %{REQUEST_URI} !^/\.well-known/pki-validation/[A-F0-9]{32}\.txt(?:\ Comodo\ DCV)?$
+    RewriteRule ^ index.php [L]
+</IfModule>
+
+# BEGIN cPanel-generated php ini directives, do not edit
+# Manual editing of this file may result in unexpected behavior.
+# To make changes to this file, use the cPanel MultiPHP INI Editor (Home >> Software >> MultiPHP INI Editor)
+# For more information, read our documentation (https://go.cpanel.net/EA4ModifyINI)
+<IfModule php7_module>
+   php_flag display_errors Off
+   php_value max_execution_time 30
+   php_value max_input_time 60
+   php_value max_input_vars 1000
+   php_value memory_limit 254M
+   php_value post_max_size 8M
+   php_value session.gc_maxlifetime 1440
+   php_value session.save_path "/var/cpanel/php/sessions/ea-php71"
+   php_value upload_max_filesize 2M
+   php_flag zlib.output_compression Off
+</IfModule>
+# END cPanel-generated php ini directives, do not edit
+
+# php -- BEGIN cPanel-generated handler, do not edit
+# Set the “ea-php71” package as the default “PHP” programming language.
+<IfModule mime_module>
+  AddHandler application/x-httpd-ea-php71 .php .php7 .phtml
+</IfModule>
+# php -- END cPanel-generated handler, do not edit

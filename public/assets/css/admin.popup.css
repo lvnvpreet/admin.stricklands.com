@@ -1,0 +1,270 @@
+/* 
+	Resets defualt browser settings
+	reset.css
+*/
+body {
+	line-height: 1;
+	color: black;
+	background-color: #EBEBEB;
+	margin: 0px;
+	padding: 0px;
+}
+
+/*
+	Page style
+*/
+
+#container {
+	width: 500px;
+	position: relative;
+	z-index: 0;
+	margin-top: 0;
+	margin-right: auto;
+	margin-bottom: 0;
+	margin-left: 0px;
+	padding-top: 50px;
+	padding-right: 20px;
+	padding-bottom: 20px;
+	padding-left: 25px;
+}
+
+#example {
+	width:500px;
+	height:375px;
+	position:relative;
+}
+
+#ribbon {
+	position:absolute;
+	top:-3px;
+	left:-15px;
+	z-index:500;
+}
+
+#frame {
+	position:absolute;
+	z-index:0;
+	width:645px;
+	height:460px;
+	top:-3px;
+	left:-68px;
+}
+.infoframe {
+	position: absolute;
+	z-index: 0;
+	width: 385px;
+	height: 393px;
+	top: 50px;
+	left: 565px;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 13px;
+	color: #333;
+	text-transform: capitalize;
+	line-height: 20px;
+	background-color: #FFF;
+	border: 1px solid #CCC;
+	padding-top: 2px;
+	padding-right: 10px;
+	padding-bottom: 10px;
+	padding-left: 10px;
+}
+
+.infoframe strong {
+	color: #069;
+}
+.infoframe h3{
+	line-height: 30px;
+	font-family: Tahoma, Geneva, sans-serif;
+	font-size: 20px;
+	color: #999;
+	padding-left: 0px;
+	padding-top: 2px;
+	border-top-width: 1px;
+	border-right-width: 1px;
+	border-bottom-width: 1px;
+	border-left-width: 1px;
+	border-top-style: none;
+	border-right-style: none;
+	border-bottom-style: solid;
+	border-left-style: none;
+	border-top-color: #CCC;
+	border-right-color: #CCC;
+	border-bottom-color: #CCC;
+	border-left-color: #CCC;
+	margin-top: 0;
+	margin-right: 0;
+	margin-bottom: 0;
+	margin-left: 0;
+}
+
+.detailfeatures {
+	position: absolute;
+	z-index: 0;
+	width: 940px;
+	top: 490px;
+	left: 15px;
+	background-color: #FFF;
+	border: 1px solid #CCC;
+	padding-top: 5px;
+	padding-right: 8px;
+	padding-bottom: 8px;
+	padding-left: 8px;
+}
+
+.titleframe {
+	position: absolute;
+	z-index: 0;
+	width: 100%;
+	height: 40px;
+	border-bottom-width: 2px;
+	border-bottom-style: solid;
+	border-bottom-color: #999;
+	background-color: #FFF;
+	padding: 0px;
+}
+.close{
+	background-color: #FFF;
+	margin-top: -28px;
+	margin-left: 960px;
+}
+
+
+.titleframe h3{
+	margin: 0;
+	line-height: 30px;
+	font-family: Tahoma, Geneva, sans-serif;
+	font-size: 20px;
+	color: #999;
+	padding-left: 15px;
+	padding-top: 5px;
+}
+.detailtext {
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 12px;
+	color: #333;
+}
+.detailtext strong {
+	color: #069;
+}
+
+/*
+	Slideshow
+*/
+
+#slides {
+	position:absolute;
+	top:15px;
+	left:4px;
+	z-index:100;
+}
+
+/*
+	Slides container
+	Important:
+	Set the width of your slides container
+	Set to display none, prevents content flash
+*/
+
+.slides_container {
+	width:500px;
+	overflow:hidden;
+	position:relative;
+	display:none;
+}
+
+/*
+	Each slide
+	Important:
+	Set the width of your slides
+	If height not specified height will be set by the slide content
+	Set to display block
+*/
+
+.slides_container a {
+	width:500px;
+	height:375px;
+	display:block;
+}
+
+.slides_container a img {
+	display:block;
+}
+
+/*
+	Next/prev buttons
+*/
+
+#slides .next,#slides .prev {
+	position:absolute;
+	top:170px;
+	left:-25px;
+	width:24px;
+	height:43px;
+	display:block;
+	z-index:101;
+}
+
+#slides .next {
+	left:500px;
+}
+
+/*
+	Pagination
+*/
+
+.pagination {
+	margin: 26px auto 0;
+	width: 200px;
+}
+
+.pagination li {
+	float:left;
+	margin:0 1px;
+	list-style:none;
+}
+
+.pagination li a {
+	display:block;
+	width:12px;
+	height:0;
+	padding-top:12px;
+	background-image:url(../img/pagination.png);
+	background-position:0 0;
+	float:left;
+	overflow:hidden;
+}
+
+.pagination li.current a {
+	background-position:0 -12px;
+}
+
+/*
+	Footer
+*/
+
+#footer {
+	text-align:center;
+	width:580px;
+	margin-top:9px;
+	padding:4.5px 0 18px;
+	border-top:1px solid #dfdfdf;
+}
+
+#footer p {
+	margin:4.5px 0;
+	font-size:1.0em;
+}
+
+/*
+	Anchors
+*/
+
+a:link,a:visited {
+	color:#599100;
+	text-decoration:none;
+}
+
+a:hover,a:active {
+	color:#599100;
+	text-decoration:underline;
+}

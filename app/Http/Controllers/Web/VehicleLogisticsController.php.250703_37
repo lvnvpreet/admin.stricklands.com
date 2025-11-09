@@ -1,0 +1,242 @@
+<?php
+
+namespace Vanguard\Http\Controllers\Web;
+
+use Exception;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
+use Vanguard\Http\Controllers\Controller;
+use Vanguard\Mail\TransferRquestResult;
+use Vanguard\Mail\VehicleTransferRequest;
+use Vanguard\Models\LogisticsIndicators;
+use Vanguard\Models\LogisticsNotes;
+use Vanguard\Models\LogisticsTimer;
+use Vanguard\Models\LogisticsTransferRequest;
+use Vanguard\Models\Userdetails;
+use Vanguard\Models\Vehicles;
+use Yajra\DataTables\Facades\DataTables;
+
+class VehicleLogisticsController extends Controller
+{
+    /**
+     * VehicleLogisticsController constructor.
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+        $this->middleware('permission:vehicle-logistics')->except(['addTransferRequest']);
+    }
+
+    public function index(Request $request){
+        if($request->has('stock_no')){
+            //Find vehicle with matching stock no.
+            $vehicle = Vehicles::where('fldStockNo',$request->stock_no)->with(['indicators','location','logistic_notes'])->first();
+            //redirect to vehicle logistics page if no vehicle found
+            if(is_null($vehicle)) return redirect(route('vehicle-logistics.'))->withErrors('Invalid Stock No.');
+
+            $user = auth()->user();
+            $canEditLogistics = ($user->details->fld_logistics_level == 1 || $user->details->fld_logistics_level == 3);
+
+            if(is_null($vehicle->indicators)) $vehicle->indicators()->create(['cleaned'=>0,'pictured'=>0,'safetied'=>0,'etested'=>0]);
+
+            $salesmans = Userdetails::where('fld_usr_cat',3)->where('fld_usr_lastname','<>','House')->orderBy('fld_usr_lastname','asc')->get();
+
+            $timers = $vehicle->timers()->orderby('checkin_date','desc')->get();
+
+            return view('vehicle-logistics.vehicle-logistics',compact('vehicle','user','canEditLogistics','salesmans','timers'));
+        }
+
+        return view('vehicle-logistics.vehicle-logistics');
+    }
+
+    public function addNote(Request $request){
+        $this->validate($request,['note'=>'required','stock_no'=>'required']);
+        $user = auth()->user();
+        $data = [
+            'stock_no'=> $request->stock_no,
+            'note'=> $request->note,
+            'date'=> date('Y-m-d'),
+            'time'=> date('H:i:s'),
+            'user_id'=>$user->id
+        ];
+
+        if($note = LogisticsNotes::create($data)){
+            return response()->json(['msg'=>trans('success.add-note',['no'=>$request->stock_no]),'by'=>$user->details->full_name,'on'=>date("Y-m-d") . " at " . date("H:i a") ]);
+        }else{
+            return response()->json(['msg'=>trans('errors.default')],500);
+        }
+    }
+
+    public function updateIndication(Request $request){
+        $data = $request->only(['cleaned','pictured','safetied','etested']);
+
+        if(is_array($data) && count($data) && $request->has('stock_no')){
+
+            $indication = LogisticsIndicators::where('stock_no',$request->get('stock_no'))->first();
+
+            if(is_null($indication))
+                return response()->json(['msg'=>trans('errors.default')],404);
+
+            $indication->update($data);
+            return response()->json(['msg'=>trans('success.default-update')]);
+        }
+        return response()->json(['msg'=>trans('errors.default')],403);
+    }
+
+    public function addTransferRequest(Request $request){
+        $this->validate($request,[
+            'stock_no'=>'required|exists:vehicles,fldStockNo',
+            'to'=>'required',
+            'date'=>'required|date_format:Y-m-d',
+            'time'=>'required|date_format:H:i:s',
+            'method'=>'required|in:Truck,Driver,Halfway',
+            'salesname'=>'nullable|exists:user_details,id'
+        ]);
+
+        $user = auth()->user();
+        $user->load('details');
+
+        $vehicle = Vehicles::where('fldStockNo',$request->stock_no)->first();
+
+        $lastLocation = $vehicle->timers()->where(function($query){
+            $query->where('location','<>','Demo & Loaners')
+                ->orWhere('location','<>','Auction');
+        })->orderBy('checkin_date','desc')->orderBy('checkin_time','desc')->first();
+
+        $data = [
+            'stock_no'=>$request->stock_no,
+            'user_id'=>$user->details->id,
+            'crnt_date'=>date('Y-m-d'),
+            'crnt_time'=>date('H:i:s'),
+            'current_location'=>$lastLocation->location,
+            'transfered'=>0,
+            'email'=>$user->details->fld_user_email,
+            'transfer_date'=>$request->date,
+            'transfer_time'=>$request->time,
+            'transfer_location'=>$request->to,
+            'transfer_method'=>$request->get('method'),
+            'driver'=>$request->salesname,
+        ];
+        $transferRequest = LogisticsTransferRequest::create($data);
+
+        if($transferRequest){
+            $note = [
+                'note'=>"**TRANSFER TO {$transferRequest->transfer_location} REQUESTED BY {$transferRequest->transfer_method} {$transferRequest->driverUser->full_name} **",
+                'stock_no'=>$request->stock_no,
+                'date'=>date('Y-m-d'),
+                'time'=>date('H:i:s'),
+                'user_id'=>$user->details->id
+            ];
+            $logisticNote = LogisticsNotes::create($note);
+
+            Mail::to('logistics@stricklands.com')->send(new VehicleTransferRequest($transferRequest));
+            return response()->json(['msg'=>'Transfer Request Successfully sended.']);
+        }else{
+            return response()->json(trans('errors.transfer-request-add'),422);
+        }
+    }
+
+    public function chckIn(Request $request){
+
+        $this->validate($request,[
+            'stock_no'=>'required|exists:vehicles,fldStockNo',
+            'location'=>'required|in:Stratford,Brantford,Windsor,Brantford Automart,Demos & Loaners,Auction',
+            'type'=>'required',
+        ]);
+
+        $lastTimer = LogisticsTimer::where('stock_no',$request->stock_no)->orderBy('id','desc')->first();
+        if($lastTimer){
+            $lastTimer->checkout_date = date('Y-m-d');
+            $lastTimer->checkout_time = date('H:i:s');
+            $lastTimer->save();
+        }
+        $timer = LogisticsTimer::create([
+            'stock_no'=>$request->stock_no,
+            'location'=>$request->location,
+            'type'=>implode(',',$request->type),
+            'checkin_date'=>date('Y-m-d'),
+            'checkin_time'=>date('H:i:s'),
+        ]);
+        if($timer){
+            $note = [
+                'note'=>"**CHECKED INTO " . strtoupper($request->location) . "**",
+                'stock_no'=>$request->stock_no,
+                'date'=>date('Y-m-d'),
+                'time'=>date('H:i:s'),
+                'user_id'=>auth()->user()->details->id
+            ];
+            $logisticNote = LogisticsNotes::create($note);
+            return redirect()->back()->withSuccess(trans('success.check-in',['location'=>$request->location]));
+        }else{
+            return redirect()->back()->withErrors(trans('errors.default'));
+        }
+    }
+
+    public function checkinVehicles(Request $request){
+        $user = Auth::user();
+        $location = "Stratford";
+        switch ($user->details->fld_usr_location){
+            case 1:
+            case 5:
+                $location = "Stratford";
+                break;
+            case 2:
+                $location = "Windsor";
+                break;
+            case 3:
+                $location = "Brantford";
+                break;
+        }
+        if($request->ajax()){
+            $indicators = LogisticsIndicators::where(function($query){
+                $query->where('cleaned',0)
+                    ->orWhere('pictured',0)
+                    ->orWhere('safetied',0)
+                    ->orWhere('etested',0);
+            })->whereHas('vehicle')
+            ->whereHas('timers',function($query) use ($location){
+                $query->where('location',$location)
+                ->whereNull('checkout_date');
+            })->get();
+
+            return DataTables::of($indicators)
+                ->editColumn('cleaned', function($indicator){ return  ($indicator->cleaned) ? 'Yes' : 'No' ; })
+                ->editColumn('pictured', function($indicator){ return  ($indicator->pictured) ? 'Yes' : 'No' ; })
+                ->editColumn('safetied', function($indicator){ return  ($indicator->safetied) ? 'Yes' : 'No' ; })
+                ->editColumn('etested', function($indicator){ return  ($indicator->etested) ? 'Yes' : 'No' ; })
+                ->make(true);
+        }
+
+        return view('vehicle-logistics.checkin-vehicles',compact('location'));
+
+    }
+
+    public function pendingTransferRequest(Request $request){
+        $transferRequest = LogisticsTransferRequest::with('vehicle')->whereHas('vehicle')->where('transfered',0)->get();
+        return view('vehicle-logistics.pending-transfer-request',compact('transferRequest'));
+    }
+
+    public function udpateTransferRequest(Request $request){
+        $this->validate($request,[
+            'id'=>'required|exists:transfer_requests,id',
+            'status'=>'required|in:1,2'
+        ]);
+
+        $tr = LogisticsTransferRequest::find($request->id);
+        $tr->transfered = $request->status;
+        $tr->save();
+
+        if(!is_null($tr->email) || !empty($tr->email)){
+            Mail::to($tr->email)->send(new TransferRquestResult($tr));
+        }
+
+        return response()->json(['msg'=>trans('success.default-update')]);
+    }
+
+    public function completedTransferRequest(Request $request){
+        $transferRequest = LogisticsTransferRequest::whereHas('vehicle')->whereIn('transfered',[1,2])->get();
+        return view('vehicle-logistics.completed-transfer-request',compact('transferRequest'));
+    }
+
+}

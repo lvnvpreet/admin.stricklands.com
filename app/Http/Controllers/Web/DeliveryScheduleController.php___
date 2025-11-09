@@ -1,0 +1,230 @@
+<?php
+
+namespace Vanguard\Http\Controllers\Web;
+
+use Carbon\Carbon;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Vanguard\Http\Controllers\Controller;
+use Vanguard\Http\Requests\DeliveryRequest;
+use Vanguard\Models\Delivery;
+use Vanguard\Models\DeliveryType;
+use Vanguard\Models\Locations;
+use Vanguard\Models\Payment;
+use Vanguard\Models\Userdetails;
+use Vanguard\Models\Vehicles;
+
+class DeliveryScheduleController extends Controller
+{
+    /**
+     * DashboardController constructor.
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+
+    public function index(Locations $location,Request $request){
+        //\DB::enableQueryLog();
+        $location_title = $location->fldLocationName;
+        $deliveries = Delivery::has('userdetail')->where('fld_location',$location->id)
+            ->where('fld_funded','No')
+            ->where('s_spare','<>','Yes')
+            ->orderByRaw('fld_pend ASC , fld_hdn ASC , ISNULL(fld_date), fld_date ASC,  fld_time ASC')
+            ->get();
+
+        // $log = \DB::getQueryLog();
+        //dd($deliveries);
+        //dd($deliveries);
+        if($request->has('view'))
+            return view('delivery-schedule.fullscreen-listing',compact('deliveries','location_title'));
+        else
+            return view('delivery-schedule.listing',compact('deliveries','location'));
+    }
+
+    public function add(Request $request){
+        if($request->has('location') && $request->has('stock_no')){
+            $this->validate($request,[
+                'location'=>'required|exists:locations,id',
+                'stock_no'=>'required|exists:vehicles,fldStockNo'
+            ]);
+
+            $vehicle = Delivery::where('fld_stock',$request->stock_no)->first();
+            //$vehicle = Vehicles::where('fldStockNo',$request->stock_no)->first();
+
+            $trackingTypes = DeliveryType::where(function ($query) use ($request){
+                if($request->location == 1 || $request->location == 5){
+                    $query->whereIn('fld_location',[1,5]);
+                }else{
+                    $query->where('fld_location',$request->location);
+                }
+            })->get()->pluck('fld_type','id')->toArray();
+
+            $locations = Locations::get()->pluck('fldShortName','id')->toArray();
+            //add Sttore option
+            $locations[''] = 'Store';
+            ksort($locations);
+            //dd($locations);
+
+            $salesPerson = Userdetails::where('fld_usr_cat',3)->where('fld_usr_location',$request->location)->get()->pluck('fullname','id')->toArray();
+            $samtoy = Userdetails::where('fld_usr_cat',3)->where('fld_usr_location',$request->location)->where('fld_usr_location', 5 or 1)->get()->pluck('fullname','id')->toArray();
+            $salesPersons = array_merge($salesPerson, $samtoy);
+            $salesPersons[''] = 'Choose One';
+            ksort($salesPersons);
+            //dd($vehicle);
+
+            $turnOvers = Userdetails::whereIn('fld_usr_location',[1,5])->where('fld_usr_cat',1)->orderBy('fld_usr_lastname','asc')->get()->pluck('full_name','id')->toArray();
+
+            $payments = Payment::where('store_id',$request->location)->orderBy('product','asc')->get()->pluck('product','code')->toArray();
+
+            //dd($trackingTypes);
+            return view('delivery-schedule.add.step-2',compact('vehicle','trackingTypes','locations','salesPersons','turnOvers','payments'));
+        }else{
+            $locations = Locations::all();
+            return view('delivery-schedule.add.step-1',compact('locations'));
+        }
+    }
+
+    public function insert(DeliveryRequest $request){
+        //Add to the table
+        $delivery = Delivery::create($request->all());
+
+        //Update points to salesman #1
+        if($request->filled('fld_points')){
+            Userdetails::where('id',$request->fld_sperson)->increment('fld_points',$request->fld_points);
+        }
+
+        //Update points to salesman #1
+        if($request->filled('fld_sperson2') && $request->filled('fld_points2') ){
+            Userdetails::where('id',$request->fld_sperson2)->increment('fld_points',$request->fld_points2);
+        }
+
+        return redirect(route('delivery-schedule',$request->fld_location))->withSuccess(trans('success.add-delivery'));
+    }
+
+    public function edit(Delivery $delivery){
+
+        $trackingTypes = DeliveryType::all()->pluck('fld_type','id')->toArray();
+
+        $locations = Locations::get()->pluck('fldShortName','id')->toArray();
+        //add Sttore option
+        $locations[''] = 'Store';
+        ksort($locations);
+        //dd($locations);
+
+        $salesPerson = Userdetails::where('fld_usr_cat',3)->where('fld_usr_location',$delivery->fld_location)->get()->pluck('fullname','id')->toArray();
+        $samtoy = Userdetails::where('fld_usr_cat',3)->where('fld_usr_location',$delivery->fld_location)->where('fld_usr_location', 5 or 1)->get()->pluck('fullname','id')->toArray();
+        $salesPersons = array_merge($salesPerson, $samtoy);
+        $salesPersons[''] = 'Choose One';
+        ksort($salesPersons);
+        //dd($vehicle);
+
+        $turnOvers = Userdetails::whereIn('fld_usr_location',[1,5])->where('fld_usr_cat',1)->orderBy('fld_usr_lastname','asc')->get()->pluck('full_name','id')->toArray();
+
+        $payments = Payment::where('store_id',$delivery->fld_location)->orderBy('product','asc')->get()->pluck('product','code')->toArray();
+
+        //dd($delivery);
+        return view('delivery-schedule.add.step-2',compact('delivery','trackingTypes','locations','salesPersons','turnOvers','payments'));
+    }
+
+    public function update(DeliveryRequest $request,Delivery $delivery){
+        $delivery->update($request->all());
+        return redirect(route('delivery-schedule',$delivery->fld_location))->withSuccess(trans('success.updated-delivery'));
+    }
+
+    public function service(Request $request, Locations $location)
+    {
+        $deliveries = Delivery::has('userdetail')->where('fld_location', $location->id)
+            ->where('fld_funded', 'No')
+            ->where('s_spare', '<>', 'Yes')
+            ->orderByRaw('fld_pend ASC , fld_hdn ASC , ISNULL(fld_date), fld_time ASC,  fld_time ASC')
+            ->get();
+
+        $service_techs = Userdetails::where('fld_usr_location', $location->id)->where('fld_usr_cat', 12)->get()->pluck('tech_name', 'tech_name')->toArray();
+        $service_techs[''] = 'Select';
+
+        return view('delivery-schedule.services', compact('deliveries', 'location', 'service_techs'));
+    }
+
+
+    public function details(Request $request, Locations $location){
+        $deliveries = Delivery::has('userdetail')->where('fld_location',$location->id)
+            ->where('fld_funded','No')
+            ->where('s_spare','<>','Yes')
+            ->orderByRaw('fld_pend ASC , fld_hdn ASC , ISNULL(fld_date), fld_date ASC,  fld_time ASC')
+            ->get();
+
+        $detail_tech = Userdetails::where('fld_usr_location',$location->id)->where('fld_usr_cat',4)->get()->pluck('tech_name','tech_name')->toArray();
+        $toyota_aut = Userdetails::where('fld_usr_location', $location == 5 || 1)->where('fld_usr_cat',4)->get()->pluck('tech_name','tech_name')->toArray('');
+       $detail_techs = array_merge($detail_tech, $toyota_aut);
+       $detail_techs[''] = 'Select';
+       $toyota_aut[''] = 'Select';
+
+        return view('delivery-schedule.details',compact('deliveries','location','detail_techs', 'toyota_aut'));
+    }
+
+    public function ajaxUpdate(Request $request){
+
+        $this->validate($request,[
+            'id'=>'required',
+            'fld_status'=>'in:OK,Alert,Delay',
+            's_w_o'=>'string',
+            's_p_tech'=>'string',
+            's_tech'=>'string',
+            's_emmision'=>'in:Yes,No',
+            's_safe'=>'in:Yes,No',
+            'd_w_o'=>'in:Yes,No',
+            'd_keys'=>'in:Yes,No',
+            'd_complete'=>'in:Yes,No',
+            's_recheck'=>'in:SS,RC',
+            'fld_posted'=>'in:Yes,No'
+        ]);
+
+        $delivery = Delivery::find($request->id);
+        if(!$delivery) return response()->json(['status'=>'fail','msg'=>trans('errors.entry-not-found')],404);
+        //Update filed
+        $delivery->update($request->only([
+            'fld_status',   's_w_o',        's_p_tech',
+            's_tech',       's_emmision',   's_safe',
+            's_recheck',    'al_notes',     'fld_notes',
+            'd_who',        'd_w_o',        'd_keys',
+            'd_complete',   'd_time',       'fld_posted'
+        ]));
+
+        return response()->json(['status'=>'OK','msg'=>trans('success.updated-delivery')]);
+    }
+
+    public function searchByDate(Locations $location,Request $request){
+        $validator = Validator::make($request->only('date'),['date'=>'required|date_format:Y-m-d']);
+        if($validator->fails()){
+            dd($validator->errors());
+            $date = Carbon::tomorrow()->format('Y-m-d');
+            return redirect(url('delivery-schedule/co-ordinator/'.$location->id.'?date='.$date))->withErrors($validator);
+        }
+
+        $deliveries = Delivery::has('userdetail')->where('fld_location',$location->id)
+            ->where('fld_date',$request->date)
+            ->where('fld_funded','No')
+            ->where('s_spare','<>','Yes')
+            ->orderByRaw('fld_pend ASC , fld_hdn ASC , ISNULL(fld_date), fld_time ASC,  fld_time ASC')
+            ->get();
+
+        return view('delivery-schedule.search-by-date',compact('deliveries','location'));
+    }
+
+    public function history(Locations $location,Request $request){
+        $limit = $request->has('limit') ? $request->limit : 1000;
+        $deliveries = Delivery::has('userdetail')
+            ->where('fld_funded','Yes')
+            ->where('fld_location',$location->id)
+            ->orderByRaw('fld_sale_date DESC,  fld_time DESC')
+            ->paginate($limit);
+
+        //redirect page one if nothing is found
+        if($request->has('page') && $request->page > 1  && $deliveries->count() == 0 ){
+            return redirect('delivery-history',['location'=>$location->id]);
+        }
+        //dd($deliveries);
+        return view('delivery-schedule.history' ,compact('location','deliveries','limit'));
+    }
+}

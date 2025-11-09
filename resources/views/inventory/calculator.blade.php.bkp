@@ -1,0 +1,421 @@
+@extends('layouts.app')
+
+@section('page-title', trans('app.dashboard'))
+
+@section('content')
+
+    <div class="row" style="margin-top: 20px;">
+        <div class="col-4">
+            <div id="calculator_1" class="panel panel-default panel-table">
+                <div class="panel-heading">
+                    Finance Programs
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-6">Sticker Price</div>
+                        <div class="col-6">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-usd"></i></span>
+                                <input id="sticker_price" value="19999" type="text" class="form-control" placeholder="Sticker Price" oninput="financeProgram(this)">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top: 5px;">
+                        <div class="col-6">Additions</div>
+                        <div class="col-6">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-usd"></i></span>
+                                <input id="additions" type="text" class="form-control" placeholder="Additions" oninput="financeProgram(this)">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row" style="margin-top: 30px;">
+                        <div class="col-6">Be Safe</div>
+                        <div class="col-6">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-usd"></i></span>
+                                <input id="be_safe" type="text" class="form-control" placeholder="Be Safe" oninput="financeProgram(this)">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top: 5px;">
+                        <div class="col-6">PPSA</div>
+                        <div class="col-6">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-usd"></i></span>
+                                <input id="ppsa" type="text" class="form-control" placeholder="PPSA" oninput="financeProgram(this)">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top: 5px;">
+                        <div class="col-6">Licence</div>
+                        <div class="col-6">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-usd"></i></span>
+                                <input id="licence" type="text" class="form-control" placeholder="Licence" oninput="financeProgram(this)">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row" style="margin-top: 30px;">
+                        <div class="col-6">Sub Total</div>
+                        <div class="col-6">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-usd"></i></span>
+                                <input id="sub_total" type="text" class="form-control" placeholder="Sub Total" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top: 5px;">
+                        <div class="col-6">GST</div>
+                        <div class="col-6">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-usd"></i></span>
+                                <input id="gst" type="text" class="form-control" placeholder="GST" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top: 5px;">
+                        <div class="col-6">PST</div>
+                        <div class="col-6">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-usd"></i></span>
+                                <input id="pst" type="text" class="form-control" placeholder="PST" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top: 5px;">
+                        <div class="col-6">Total Taxes In</div>
+                        <div class="col-6">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-usd"></i></span>
+                                <input id="total_tax" type="text" class="form-control" placeholder="Taxes" disabled>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row" style="margin-top: 30px;">
+                        <div class="col-6">Trade</div>
+                        <div class="col-6">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-usd"></i></span>
+                                <input id="trade" type="text" class="form-control" placeholder="Trade" oninput="financeProgram(this)">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top: 5px;">
+                        <div class="col-6">Lien</div>
+                        <div class="col-6">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-usd"></i></span>
+                                <input id="lien" type="text" class="form-control" placeholder="Lien" oninput="financeProgram(this)">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top: 5px;">
+                        <div class="col-6">Down Payment</div>
+                        <div class="col-6">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-usd"></i></span>
+                                <input id="down_payment" type="text" class="form-control" placeholder="Down Payment" oninput="financeProgram(this)">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row" style="margin-top: 30px;">
+                        <div class="col-6">Amount to be Financed</div>
+                        <div class="col-6">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-usd"></i></span>
+                                <input id="financed_amount" type="text" class="form-control" placeholder="F/A" disabled>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row" style="margin-top: 30px;">
+                        <div class="col-6">Term</div>
+                        <div class="col-6">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-time"></i></span>
+                                <select onchange="financeProgram(this)" class="form-control" id="term">
+                                    <option value="36">3 Year</option>
+                                    <option value="48">4 Year</option>
+                                    <option value="60">5 Year</option>
+                                    <option value="72">6 Year</option>
+                                    <option value="84">7 Year</option>
+                                    <option value="96">8 Year</option>
+                                </select>
+                                {{--<input id="term" type="text" class="form-control" placeholder="Term" oninput="financeProgram(this)">--}}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top: 5px;">
+                        <div class="col-6">Interest Rate</div>
+                        <div class="col-6">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-info-sign"></i></span>
+                                <input id="interest_rate" value="7.1" type="text" class="form-control" oninput="financeProgram(this)" placeholder="Interest Rate">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row" style="margin-top: 30px;">
+                        <div class="col-6">Monthly Payment</div>
+                        <div class="col-6">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-usd"></i></span>
+                                <input id="monthly" type="text" class="form-control" placeholder="Monthly" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top: 5px;">
+                        <div class="col-6">Biweekly</div>
+                        <div class="col-6">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-usd"></i></span>
+                                <input id="biweekly" type="text" class="form-control" placeholder="Biweekly" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top: 5px;">
+                        <div class="col-6">Weekly</div>
+                        <div class="col-6">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-usd"></i></span>
+                                <input id="weekly" type="text" class="form-control" placeholder="Weekly" disabled>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+
+        <div class="col-4">
+            <div id="calculator_2" class="panel panel-default panel-table">
+                <div class="panel-heading">
+                    Cash Deal
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-6">Sticker Price</div>
+                        <div class="col-6">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-usd"></i></span>
+                                <input id="cash_sticker_price" value="19999" type="text" class="form-control" placeholder="Sticker Price" oninput="cashDeal(this)">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top:5px">
+                        <div class="col-6">Additions</div>
+                        <div class="col-6">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-usd"></i></span>
+                                <input id="cash_additions" type="text" class="form-control" placeholder="Additions" oninput="cashDeal(this)">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row" style="margin-top:30px">
+                        <div class="col-6">Be Safe</div>
+                        <div class="col-6">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-usd"></i></span>
+                                <input id="cash_be_safe" type="text" class="form-control" placeholder="Be Safe" oninput="cashDeal(this)">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row" style="margin-top:30px">
+                        <div class="col-6">Licence</div>
+                        <div class="col-6">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-usd"></i></span>
+                                <input id="cash_licence" type="text" class="form-control" placeholder="Licence" oninput="cashDeal(this)">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row" style="margin-top:30px">
+                        <div class="col-6">Sub Total</div>
+                        <div class="col-6">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-usd"></i></span>
+                                <input id="cash_sub_total" type="text" class="form-control" placeholder="Sub Total" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top:5px">
+                        <div class="col-6">GST</div>
+                        <div class="col-6">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-usd"></i></span>
+                                <input id="cash_gst" type="text" class="form-control" placeholder="GST" disabled>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top:5px">
+                        <div class="col-6">PST</div>
+                        <div class="col-6">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-usd"></i></span>
+                                <input id="cash_pst" type="text" class="form-control" placeholder="PST" disabled>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row" style="margin-top:30px">
+                        <div class="col-6">Trade</div>
+                        <div class="col-6">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-usd"></i></span>
+                                <input id="cash_trade" type="text" class="form-control" placeholder="Trade" oninput="cashDeal(this)">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top:5px">
+                        <div class="col-6">Lien</div>
+                        <div class="col-6">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-usd"></i></span>
+                                <input id="cash_lien" type="text" class="form-control" placeholder="Lien" oninput="cashDeal(this)">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top:5px">
+                        <div class="col-6">Down Payment</div>
+                        <div class="col-6">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-usd"></i></span>
+                                <input id="cash_down_payment" type="text" class="form-control" placeholder="Down Payment" oninput="cashDeal(this)">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row" style="margin-top:30px">
+                        <div class="col-6">Total</div>
+                        <div class="col-6">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-usd"></i></span>
+                                <input id="cash_total" type="text" class="form-control" placeholder="Total" disabled>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+        <div class="col-4">
+            <div class="panel panel-default panel-table">
+                <div class="panel-heading">Interest Rates</div>
+                <div class="panel-body">
+                    <table class="table table-borderless">
+                        <tbody>
+                        <tr>
+                            <td style="font-weight:600">Over $23,000</td>
+                            <td class="text-center">7.74</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight:600">$10,000-$22,999</td>
+                            <td class="text-center">8.10</td>
+                        </tr>
+                        <tr>
+                            <td style="font-weight:600">Under $10,000</td>
+                            <td class="text-center">9.74</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+@stop
+
+@section('top-scripts')
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+@endsection
+
+@section('scripts')
+    <script>
+
+        function cashDeal(data) {
+            //$("#calculator_2 input").val("");
+            let stricker_price= parseFloat($("#cash_sticker_price").val()?$("#cash_sticker_price").val():0);
+            let additions= parseFloat($("#cash_additions").val()?$("#cash_additions").val():0);
+            let be_safe= parseFloat($("#cash_be_safe").val()?$("#cash_be_safe").val():0);
+            let licence= parseFloat($("#cash_licence").val()?$("#cash_licence").val():0);
+            let trade= parseFloat($("#cash_trade").val()?$("#cash_trade").val():0);
+            let lien= parseFloat($("#cash_lien").val()?$("#cash_lien").val():0);
+            let down_payment= parseFloat($("#cash_down_payment").val()?$("#cash_down_payment").val():0);
+
+            jQuery("#cash_sub_total").val((stricker_price+additions+be_safe-trade).toFixed(2));
+            let subTotal=parseFloat(jQuery("#cash_sub_total").val()?jQuery("#cash_sub_total").val():0);
+
+            let gst= subTotal*0.06;
+            let pst= subTotal*0.08;
+            $("#cash_gst").val(gst.toFixed(2));
+            $("#cash_pst").val(pst.toFixed(2));
+            let total= subTotal*1.14-down_payment+lien+licence;
+            jQuery("#cash_total").val(total.toFixed(2));
+
+        }
+
+
+        function financeProgram(data){
+            //$("#calculator_1 input").val("");
+            let stricker_price= parseFloat($("#sticker_price").val()?$("#sticker_price").val():0);
+            let additions= parseFloat($("#additions").val()?$("#additions").val():0);
+            let be_safe= parseFloat($("#be_safe").val()?$("#be_safe").val():0);
+            let ppsa= parseFloat($("#ppsa").val()?$("#ppsa").val():0);
+            let licence= parseFloat($("#licence").val()?$("#licence").val():0);
+            let trade= parseFloat($("#trade").val()?$("#trade").val():0);
+            let lien= parseFloat($("#lien").val()?$("#lien").val():0);
+            let down_payment= parseFloat($("#down_payment").val()?$("#down_payment").val():0);
+            let term= parseFloat($("#term").val()?$("#term").val():0);
+
+            jQuery("#sub_total").val((stricker_price+additions+be_safe-trade).toFixed(2));
+            let subTotal=parseFloat(jQuery("#sub_total").val()?jQuery("#sub_total").val():0);
+
+            let gst= subTotal*0.06;
+            let pst= subTotal*0.08;
+            $("#gst").val(gst.toFixed(2));
+            $("#pst").val(pst.toFixed(2));
+
+            jQuery("#total_tax").val((subTotal+gst+pst+ppsa+licence+lien).toFixed(2));
+            let totalTax=parseFloat(jQuery("#total_tax").val()?jQuery("#total_tax").val():0);
+
+            jQuery("#financed_amount").val((totalTax-down_payment).toFixed(2));
+
+            let financedAmount=parseFloat(jQuery("#financed_amount").val()?jQuery("#financed_amount").val():0);
+
+            let total= financedAmount/*+term*/;
+            /*let interest_rate= 0.00;
+            if (total < 10000){interest_rate=9.74; }
+            if (total>10000 && total<22999){interest_rate=8.10;}
+            if (total > 23000){interest_rate=7.74;}*/
+
+            let interest_rate = jQuery("#interest_rate").val();
+
+            let totalcal_1 = (interest_rate/100);
+            let totalcal_2 = (totalcal_1/12);
+            let totalcal_3 = Math.pow((totalcal_2+1),term);
+            let monthly_total = (totalcal_3*totalcal_2*financedAmount)/(totalcal_3-1)+10;
+            let biweekly_total = (monthly_total*12)/26+5;
+            let weekly_total = biweekly_total/2+2.5;
+
+            jQuery("#monthly").val(monthly_total.toFixed(2));
+            jQuery("#biweekly").val(biweekly_total.toFixed(2));
+            jQuery("#weekly").val(weekly_total.toFixed(2));
+
+
+        }
+
+        financeProgram('');
+        cashDeal('');
+    </script>
+@stop

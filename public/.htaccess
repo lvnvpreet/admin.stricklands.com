@@ -1,0 +1,149 @@
+
+RewriteOptions inherit
+Options -Indexes
+
+order deny,allow
+deny from all
+allow from 216.110.224.113
+allow from 173.209.132.162
+allow from 207.35.146.162
+allow from 24.143.180.42
+allow from 70.28.61.17
+allow from 66.207.114.206
+allow from 184.145.81.48
+allow from 68.179.35.0
+allow from 174.113.73.101
+allow from 209.171.88.53
+allow from 72.143.63.66
+allow from 157.47.237.120
+allow from 103.207.171.131
+allow from 103.179.0.82
+
+#terry
+allow from 24.204.210.110
+
+#tyler
+allow from 97.100.65.32
+
+#edmondson
+allow from 72.139.206.98
+
+#Jeff
+allow from 184.94.177.167
+allow from 72.14.201.57
+allow from 70.30.108.106
+allow from 142.114.57.0
+allow from 70.31.20.69
+allow from 98.58.36.205
+
+#Jeff
+allow from 73.23.57.20
+allow from 216.8.163.6
+
+#Kerri
+allow from 99.254.226.227
+allow from 99.254.216.108
+
+#Damion
+#allow from 216.8.163.6
+
+#Ryan
+allow from 99.226.134.150
+
+#Tyler
+allow from 184.94.177.88
+
+#Bennett
+allow from 108.168.7.186
+allow from 184.94.186.234
+allow from 184.94.188.114
+allow from 185.244.212.62
+allow from 104.249.230.126
+
+#Harper
+allow from 216.174.90.197
+allow from 192.0.248.212
+allow from 103.200.84.224
+
+#Kelly
+allow from 72.140.217.77
+allow from 72.137.80.160
+
+#Frank
+allow from 99.254.215.54
+
+#Gena
+allow from 209.202.222.46
+
+#Pie
+allow from 135.23.174.238
+
+#UmarSaeed
+allow from 99.251.65.219
+
+#Bes
+allow from 67.201.160.59
+
+#Ken
+allow from 100.43.112.185 
+
+<IfModule mod_rewrite.c>
+    <IfModule mod_negotiation.c>
+        Options -MultiViews -Indexes
+    </IfModule>
+
+    RewriteEngine On
+
+    # Handle Authorization Header
+    RewriteCond %{HTTP:Authorization} .
+    RewriteRule .* - [E=HTTP_AUTHORIZATION:%{HTTP:Authorization}]
+
+    # Redirect Trailing Slashes If Not A Folder...
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_URI} (.+)/$
+    RewriteRule ^ %1 [L,R=301]
+
+    # Handle Front Controller...
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteRule ^ index.php [L]
+</IfModule>
+
+# BEGIN cPanel-generated php ini directives, do not edit
+# Manual editing of this file may result in unexpected behavior.
+# To make changes to this file, use the cPanel MultiPHP INI Editor (Home >> Software >> MultiPHP INI Editor)
+# For more information, read our documentation (https://go.cpanel.net/EA4ModifyINI)
+<IfModule php8_module>
+   php_value error_reporting E_ALL & ~E_NOTICE & ~E_WARNING
+   php_flag display_errors Off
+   php_value max_execution_time 30
+   php_value max_input_time 60
+   php_value max_input_vars 1000
+   php_value memory_limit 2048M
+   php_value post_max_size 8M
+   php_value session.gc_maxlifetime 1440
+   php_value session.save_path "/var/cpanel/php/sessions/ea-php81"
+   php_value upload_max_filesize 2M
+   php_flag zlib.output_compression Off
+</IfModule>
+<IfModule lsapi_module>
+   php_value error_reporting E_ALL & ~E_NOTICE & ~E_WARNING
+   php_flag display_errors Off
+   php_value max_execution_time 30
+   php_value max_input_time 60
+   php_value max_input_vars 1000
+   php_value memory_limit 2048M
+   php_value post_max_size 8M
+   php_value session.gc_maxlifetime 1440
+   php_value session.save_path "/var/cpanel/php/sessions/ea-php81"
+   php_value upload_max_filesize 2M
+   php_flag zlib.output_compression Off
+</IfModule>
+# END cPanel-generated php ini directives, do not edit
+
+# php -- BEGIN cPanel-generated handler, do not edit
+# Set the “ea-php81” package as the default “PHP” programming language.
+<IfModule mime_module>
+  AddHandler application/x-httpd-ea-php81 .php .php8 .phtml
+</IfModule>
+# php -- END cPanel-generated handler, do not edit

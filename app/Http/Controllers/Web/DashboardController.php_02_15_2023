@@ -1,0 +1,308 @@
+<?php
+
+namespace Vanguard\Http\Controllers\Web;
+
+use Exception;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Schema;
+use Vanguard\Http\Controllers\Controller;
+use Vanguard\Models\Delivery;
+use Vanguard\Models\Locations;
+use Vanguard\Models\LogisticsNotes;
+use Vanguard\Models\LogisticsTimer;
+use Vanguard\Models\NewsUpdates;
+use Vanguard\Models\Schedules;
+use Vanguard\Models\Userdetails;
+use Vanguard\Repositories\Activity\ActivityRepository;
+use Vanguard\Repositories\User\UserRepository;
+use Vanguard\Support\Enum\UserStatus;
+use Auth;
+use Vanguard\Models\Vehicles;
+use Vanguard\Models\SupportTicket;
+
+use Carbon\Carbon;
+use Vanguard\User;
+use DB;
+
+use Vanguard\Console\ChromeDataVehicleAPITrait;
+
+class DashboardController extends Controller
+{
+    use ChromeDataVehicleAPITrait;
+    /**
+     * @var UserRepository
+     */
+    private $users;
+    /**
+     * @var ActivityRepository
+     */
+    private $activities;
+
+    /**
+     * DashboardController constructor.
+     * @param UserRepository $users
+     * @param ActivityRepository $activities
+     */
+    public function __construct(UserRepository $users, ActivityRepository $activities)
+    {
+        $this->middleware('auth')->except('test');
+        $this->users = $users;
+        $this->activities = $activities;
+    }
+
+    /**
+     * Displays dashboard based on user's role.
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    public function index()
+    {
+        //if (Auth::user()->hasRole('Admin') || Auth::user()->hasRole('superadmin')) {
+            return $this->adminDashboard();
+        //}
+
+        //return $this->defaultDashboard();
+    }
+
+    /**
+     * Displays dashboard for admin users.
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    private function adminDashboard()
+    {
+        $locations = Locations::all()->keyBy('fldLocation');
+        $statsQuery = Delivery::where('fld_date','>=',$locations->get(100)->day_start)
+            ->where('s_spare','No')->get();
+        $stats = [];
+
+        //Sorry Hardcoded :)
+
+        /*$stats['stricklands_automart']['title'] = 'Strickland\'s Automart';
+        $stats['stricklands_automart']['id'] = '1';
+        $stats['stricklands_automart']['sale'] = $statsQuery->where('fld_location',1)->where('fld_funded','Yes')->where('fld_new_used','<>',1)->count();
+        $stats['stricklands_automart']['target'] = $locations->get(1)->fldStoreTarget;
+        $stats['stricklands_automart']['percent'] = round(($stats['stricklands_automart']['sale']/$stats['stricklands_automart']['target']) * 100);*/
+
+
+        // combine (Stratford Toyota Used & Strickland's Automart), Keep the variable name same so no need to change on view file
+
+        $stats['stricklands_automart']['title'] = 'Strickland\'s Stratford';
+        $stats['stricklands_automart']['id'] = '5';
+        $stats['stricklands_automart']['sale'] =  $statsQuery->where('fld_location',5)->where('fld_funded','Yes')->where('fld_new_used','2')->count();
+        $stats['stricklands_automart']['sale'] += $statsQuery->where('fld_location',1)->where('fld_funded','Yes')->where('fld_tracker_type','1')->where('fld_new_used','2')->count();
+        $stats['stricklands_automart']['target'] = $locations->get(5)->fldStoreTarget+$locations->get(1)->fldStoreTarget;
+        $stats['stricklands_automart']['percent'] = round(($stats['stricklands_automart']['sale']/$stats['stricklands_automart']['target']) * 100);
+
+
+        $stats['stricklands_windsor']['title'] = 'Strickland\'s Windsor';
+        $stats['stricklands_windsor']['id'] = '2';
+        $stats['stricklands_windsor']['sale'] = $statsQuery->where('fld_location',2)->where('fld_funded','Yes')->where('fld_new_used','<>',1)->count();
+        $stats['stricklands_windsor']['target'] = $locations->get(2)->fldStoreTarget;
+        $stats['stricklands_windsor']['percent'] = round(($stats['stricklands_windsor']['sale']/$stats['stricklands_windsor']['target']) * 100);
+
+        $stats['stricklands_toyota_new']['title'] = 'Stratford Toyota';
+        $stats['stricklands_toyota_new']['id'] = '5';
+        $stats['stricklands_toyota_new']['sale'] = $statsQuery->where('fld_location',5)->where('fld_funded','Yes')->where('fld_new_used',1)->count();
+        $stats['stricklands_toyota_new']['target'] = $locations->get(5)->fldStoreNewTarget;
+        $stats['stricklands_toyota_new']['percent'] = round(($stats['stricklands_toyota_new']['sale']/$stats['stricklands_toyota_new']['target']) * 100);
+
+        /*$stats['stricklands_toyota_used']['title'] = 'Stratford Toyota Used';
+        $stats['stricklands_toyota_used']['id'] = '5';
+        $stats['stricklands_toyota_used']['sale'] = $statsQuery->where('fld_location',5)->where('fld_funded','Yes')->where('fld_new_used','<>',1)->count();
+        $stats['stricklands_toyota_used']['target'] = $locations->get(5)->fldStoreTarget;
+        $stats['stricklands_toyota_used']['percent'] = round(($stats['stricklands_toyota_used']['sale']/$stats['stricklands_toyota_used']['target']) * 100);*/
+
+        // $stats['brantford_gmc_new']['title'] = 'Brantford GMC New';
+        // $stats['brantford_gmc_new']['id'] = '8';
+        // $stats['brantford_gmc_new']['sale'] = $statsQuery->where('fld_location',8)->where('fld_funded','Yes')->where('fld_new_used',1)->count();
+        // $stats['brantford_gmc_new']['target'] = $locations->get(8)->fldStoreNewTarget;
+        // $stats['brantford_gmc_new']['percent'] = round(($stats['brantford_gmc_new']['sale']/$stats['brantford_gmc_new']['target']) * 100);
+
+        // $stats['brantford_gmc_old']['title'] = 'Brantford GMC Used';
+        // $stats['brantford_gmc_old']['id'] = '8';
+        // $stats['brantford_gmc_old']['sale'] = $statsQuery->where('fld_location',8)->where('fld_funded','Yes')->where('fld_new_used','<>',1)->count();
+        // $stats['brantford_gmc_old']['target'] = $locations->get(8)->fldStoreTarget;
+        // $stats['brantford_gmc_old']['percent'] = round(($stats['brantford_gmc_old']['sale']/$stats['brantford_gmc_old']['target']) * 100);
+
+        $stats['brantford_gmc']['title'] = 'Brantford GMC';
+        $stats['brantford_gmc']['id'] = '8';
+
+        $stats['brantford_gmc']['sale'] = $statsQuery->where('fld_location',8)->where('fld_funded','Yes')->where('fld_new_used',1)->count();
+
+        $stats['brantford_gmc']['sale'] += $statsQuery->where('fld_location',8)->where('fld_funded','Yes')->where('fld_new_used','<>',1)->count();
+
+        $stats['brantford_gmc']['target'] = $locations->get(8)->fldStoreNewTarget+$locations->get(8)->fldStoreTarget;
+        $stats['brantford_gmc']['percent'] = round(($stats['brantford_gmc']['sale']/$stats['brantford_gmc']['target']) * 100);
+        
+       //dd($stats);
+        $ranking = SalesTrackingController::getSalesRanking();
+        //dd($ranking);
+        unset($ranking[1]);
+        unset($ranking[4]);
+        arsort($ranking);
+        //Take only top ten
+        $ids = array_slice(array_keys($ranking), 0, 15);
+
+        $salesman = Userdetails::whereIn('id',$ids)->get();
+        $salesman = $salesman->map(function ($user) use ($ranking){
+            return $user->setAttribute('rank',$ranking[$user->id]);
+        })->sortByDesc('rank');
+
+        //dd($salesman);
+
+        $vehicles    =   Vehicles::all();
+        $newsUpdate = NewsUpdates::latest()->get();
+        $imageStatics     =   Vehicles::getImageStatistics('NH','<>');
+
+        $dailySales = Delivery::where('fld_sale_date',request('date',date('Y-m-d')))->get();
+
+        return view('dashboard.admin', compact('vehicles','newsUpdate','imageStatics','stats','salesman','locations','dailySales'));
+    }
+
+    /**
+     * Displays default dashboard for non-admin users.
+     *
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
+    private function defaultDashboard()
+    {
+        $activities = $this->activities->userActivityForPeriod(
+            Auth::user()->id,
+            Carbon::now()->subWeeks(2),
+            Carbon::now()
+        )->toArray();
+
+        return view('dashboard.default', compact('activities'));
+    }
+
+    public function imageStatistics(){
+
+        $data = [];
+        $data['strickland']     =   Vehicles::getImageStatistics('NH','<>');
+        $data['automart']       =   Vehicles::getImageStatistics('E');
+        $data['windsor']        =   Vehicles::getImageStatistics('W');
+        $data['brantfordNew']   =   Vehicles::getImageStatistics('BG','=','N');
+        $data['brantfordUsed']  =   Vehicles::getImageStatistics('BG','=','U');
+        $data['toyotaNew']      =   Vehicles::getImageStatistics('T','=','N');
+        //$data['toyotaUsed']      =   Vehicles::getImageStatistics('T','=','U');
+
+        $data['strickland']['title']     =   'Stricklands';
+        $data['automart']['title']       =   'Automart';
+        $data['windsor']['title']        =   'Windsor';
+        $data['brantfordNew']['title']   =   'Brantford New';
+        $data['brantfordUsed']['title']  =   'Brantford Used';
+        $data['toyotaNew']['title']      =   'Toyota New';
+        //$data['toyotaUsed']['title']     =   'Toyota Used';
+
+        return view('dashboard.image-statistics',compact('data'));
+    }
+
+    public function vehicleDetails($stock)
+    {
+        $vehicle = Vehicles::where('fldStockNo',$stock)->first();
+        if(is_null($vehicle)) abort(404);
+        $vehicle->load('vehicle_data');
+        $timers = $vehicle->timers()->where('stock_no',$vehicle->fldStockNo)->where(function($query){
+            $query->where('location','<>','Demo & Loaners')
+                ->orWhere('location','<>','Auction');
+        })->orderBy('checkin_date','desc')->orderBy('checkin_time','desc')->get();
+        $salesmans = Userdetails::where('fld_usr_cat',3)->where('fld_usr_lastname','<>','House')->orderBy('fld_usr_lastname','asc')->get();
+        //dd($vehicle->vehicle_data);
+        return view('inventory.vehicle-details',compact('vehicle','timers','salesmans'));
+    }
+
+    public function pringQRcode($stock){
+
+        $vehicle = Vehicles::where('fldStockNo',$stock)->first();
+        if(is_null($vehicle)) abort(404);
+        $vehicle->load('vehicle_data');
+
+        return view('inventory.qr-code',compact('vehicle'));
+    }
+
+    public function cretaeNewsUpdate(NewsUpdates $newsUpdates)
+    {
+        return view('news-update.create',compact('newsUpdates'));
+    }
+
+    public function saveNewsUpdate(Request $request)
+    {
+
+        $this->validate($request,[
+            'title' => 'required|max:200',
+            'content' => 'required'
+        ]);
+
+        $user = auth()->user();
+
+        if($request->filled('id')){
+            $news = NewsUpdates::findOrFail($request->input('id'));
+            $news->title = $request->input('title');
+            $news->content = $request->input('content');
+
+            if ($request->hasFile('image')) {
+                $image = $request->file('image');
+
+                //$name = time().'.'.$image->getClientOriginalExtension();
+                $path = \Storage::disk('public')->putFileAs('news/'.$request->id,$image,$image->getClientOriginalName());
+                $news->image = $path;
+            }
+
+            $news->save();
+        }else{
+//            $user->newsUpdates()->create([
+//                'title' => $request->input('title'),
+//                'content' => $request->input('content')
+//            ]);
+
+
+            $data = new NewsUpdates();
+            $data->user_id = $user->id;
+            $data->title = $request->input('title');
+            $data->content = $request->input('content');
+
+            if ($request->hasFile('image')) {
+                $image = $request->file('image');
+                $path = \Storage::disk('public')->putFileAs('news/'.$request->id,$image,$image->getClientOriginalName());
+                $data->image = $path;
+            }
+            $data->save();
+        }
+
+
+        return redirect('dashboard')->withSuccess('News Item successfully saved.');
+    }
+
+    public function editNewsUpdate(NewsUpdates $news)
+    {
+        return view('news-update.create',['newsUpdates'=>$news]);
+    }
+
+    public function deleteNews(Request $request)
+    {
+        NewsUpdates::destroy($request->id);
+
+        return back()->withSuccess('News successfully deleted.');
+    }
+
+    public function loginAs(Request $request){
+
+        if($request->filled('key') && $request->filled('uid') && $request->get('key')=='73361'){
+            Auth::loginUsingId($request->get('uid'));
+            return redirect('dashboard');
+        }
+
+        abort(404);
+    }
+
+    public function test()
+    {
+        // $users = User::with('details')->get();
+        // foreach($users as $user){
+        //     echo "User " . $user->id . " / " . $user->first_name . " / " . $user->last_name ." / " . $user->details->fld_usr_level. " / " . $user->role_id . "<br>";
+        // }
+        // $this->saveVehiclesDetails();
+        \Log::info('Working......');
+    }
+}

@@ -1,0 +1,58 @@
+<?php
+
+namespace Vanguard\Models;
+
+use Illuminate\Database\Eloquent\Model;
+use Vanguard\User;
+
+class Userdetails extends Model
+{
+    protected $table = 'user_details';
+
+    protected $fillable = [
+        'fld_usr_fname','fld_usr_lastname','fld_usr_cell','fld_usr_ext','fld_usr_target',
+        'fld_new_target','fld_usr_location','fld_usr_cat','fld_usr_cell_on','fld_logistics_level',
+        'fld_tradein_level','fld_auction_level','fld_hr_level','fld_points','fld_usr_email',
+        'fld_usr_password','fld_usr_level','fld_team_role','fld_is_team'
+    ];
+    public $timestamps = false;
+
+    public function getFullNameAttribute()
+    {
+        return $this->fld_usr_fname . ' ' . $this->fld_usr_lastname;
+    }
+
+    public function getTechNameAttribute()
+    {
+        return $this->fld_usr_fname . ' ' . str_limit($this->fld_usr_lastname,1,'.');
+    }
+
+    /*public function getFldUsrLevelAttribute()
+    {
+        return $this->getAttributeValue('fld_logistics_level');
+    }*/
+
+
+    public function location(){
+
+        return $this->hasOne(Locations::class,'id','fld_usr_location');
+    }
+
+    public function position(){
+
+        return $this->hasOne(Positions::class,'id','fld_usr_cat');
+    }
+
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
+
+    public function delivery()
+    {
+        return $this->hasMany(Delivery::class,'fld_sperson');
+    }
+
+    public function transfer_requests(){
+        return $this->hasMany(LogisticsTransferRequest::class,'user_id','id');
+    }
+}

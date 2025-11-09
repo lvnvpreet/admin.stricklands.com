@@ -1,0 +1,89 @@
+[04-Dec-2019 12:04:27 America/New_York] PHP Parse error:  syntax error, unexpected '?' in /home/adminstrick/admin.stricklands.com/vendor/laravel/framework/src/Illuminate/Foundation/helpers.php on line 233
+[04-Dec-2019 12:04:45 America/New_York] PHP Parse error:  syntax error, unexpected '?' in /home/adminstrick/admin.stricklands.com/vendor/laravel/framework/src/Illuminate/Foundation/helpers.php on line 233
+[06-Dec-2019 05:45:57 America/New_York] PHP Parse error:  syntax error, unexpected '?' in /home/adminstrick/admin.stricklands.com/vendor/laravel/framework/src/Illuminate/Foundation/helpers.php on line 233
+[06-Dec-2019 05:46:38 America/New_York] PHP Parse error:  syntax error, unexpected '?' in /home/adminstrick/admin.stricklands.com/vendor/laravel/framework/src/Illuminate/Foundation/helpers.php on line 233
+[06-Dec-2019 05:47:12 America/New_York] PHP Parse error:  syntax error, unexpected '?' in /home/adminstrick/admin.stricklands.com/vendor/laravel/framework/src/Illuminate/Foundation/helpers.php on line 233
+[06-Apr-2022 12:08:04 UTC] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 20480 bytes) in phar:///opt/cpanel/composer/bin/composer/src/Composer/Repository/ComposerRepository.php on line 805
+[06-Apr-2022 12:11:43 UTC] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 20480 bytes) in phar:///opt/cpanel/composer/bin/composer/src/Composer/Repository/ComposerRepository.php on line 805
+[06-Apr-2022 12:12:25 UTC] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 20480 bytes) in phar:///opt/cpanel/composer/bin/composer/src/Composer/Repository/ComposerRepository.php on line 805
+[06-Apr-2022 12:14:49 UTC] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 20480 bytes) in phar:///opt/cpanel/composer/bin/composer/src/Composer/Repository/ComposerRepository.php on line 805
+[06-Apr-2022 12:15:50 UTC] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 57344 bytes) in phar:///opt/cpanel/composer/bin/composer/src/Composer/Cache.php on line 130
+[06-Apr-2022 12:17:12 UTC] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 57344 bytes) in phar:///opt/cpanel/composer/bin/composer/src/Composer/Cache.php on line 130
+[06-Apr-2022 12:17:23 UTC] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 57344 bytes) in phar:///opt/cpanel/composer/bin/composer/src/Composer/Cache.php on line 130
+[06-Apr-2022 12:22:39 UTC] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 57344 bytes) in phar:///opt/cpanel/composer/bin/composer/src/Composer/Cache.php on line 130
+[06-Apr-2022 12:23:59 UTC] PHP Warning:  ini_set() has been disabled for security reasons in /home/adminstrick/admin.stricklands.com/vendor/vlucas/phpdotenv/src/Loader.php on line 172
+[06-Apr-2022 12:23:59 UTC] PHP Warning:  ini_set() has been disabled for security reasons in /home/adminstrick/admin.stricklands.com/vendor/vlucas/phpdotenv/src/Loader.php on line 174
+[06-Apr-2022 12:24:17 UTC] PHP Warning:  ini_set() has been disabled for security reasons in /home/adminstrick/admin.stricklands.com/vendor/vlucas/phpdotenv/src/Loader.php on line 172
+[06-Apr-2022 12:24:17 UTC] PHP Warning:  ini_set() has been disabled for security reasons in /home/adminstrick/admin.stricklands.com/vendor/vlucas/phpdotenv/src/Loader.php on line 174
+[06-Apr-2022 12:30:08 UTC] PHP Warning:  ini_set() has been disabled for security reasons in /home/adminstrick/admin.stricklands.com/vendor/vlucas/phpdotenv/src/Loader.php on line 172
+[06-Apr-2022 12:30:08 UTC] PHP Warning:  ini_set() has been disabled for security reasons in /home/adminstrick/admin.stricklands.com/vendor/vlucas/phpdotenv/src/Loader.php on line 174
+[06-Apr-2022 12:31:21 UTC] PHP Warning:  ini_set() has been disabled for security reasons in /home/adminstrick/admin.stricklands.com/vendor/vlucas/phpdotenv/src/Loader.php on line 172
+[06-Apr-2022 12:31:21 UTC] PHP Warning:  ini_set() has been disabled for security reasons in /home/adminstrick/admin.stricklands.com/vendor/vlucas/phpdotenv/src/Loader.php on line 174
+[06-Apr-2022 12:37:19 UTC] PHP Warning:  ini_set() has been disabled for security reasons in /home/adminstrick/admin.stricklands.com/vendor/vlucas/phpdotenv/src/Loader.php on line 172
+[06-Apr-2022 12:37:19 UTC] PHP Warning:  ini_set() has been disabled for security reasons in /home/adminstrick/admin.stricklands.com/vendor/vlucas/phpdotenv/src/Loader.php on line 174
+[06-Apr-2022 12:37:49 UTC] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 20480 bytes) in phar:///opt/cpanel/composer/bin/composer/src/Composer/Repository/ComposerRepository.php on line 805
+[06-Apr-2022 12:39:28 UTC] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 20480 bytes) in phar:///opt/cpanel/composer/bin/composer/src/Composer/Repository/ComposerRepository.php on line 805
+[06-Apr-2022 12:44:55 UTC] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 20480 bytes) in phar:///opt/cpanel/composer/bin/composer/src/Composer/Repository/ComposerRepository.php on line 805
+[06-Apr-2022 12:45:18 UTC] PHP Warning:  require(/home/adminstrick/admin.stricklands.com/vendor/autoload.php): failed to open stream: No such file or directory in /home/adminstrick/admin.stricklands.com/artisan on line 18
+[06-Apr-2022 12:45:18 UTC] PHP Fatal error:  require(): Failed opening required '/home/adminstrick/admin.stricklands.com/vendor/autoload.php' (include_path='.:/opt/cpanel/ea-php73/root/usr/share/pear') in /home/adminstrick/admin.stricklands.com/artisan on line 18
+[06-Apr-2022 12:45:23 UTC] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 20480 bytes) in phar:///opt/cpanel/composer/bin/composer/src/Composer/Repository/ComposerRepository.php on line 805
+[06-Apr-2022 12:57:57 UTC] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 20480 bytes) in phar:///opt/cpanel/composer/bin/composer/src/Composer/Repository/ComposerRepository.php on line 805
+[06-Apr-2022 13:01:55 UTC] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 20480 bytes) in phar:///opt/cpanel/composer/bin/composer/src/Composer/Package/Loader/ArrayLoader.php on line 338
+[06-Apr-2022 13:05:14 UTC] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 20480 bytes) in phar:///opt/cpanel/composer/bin/composer/src/Composer/Package/Loader/ArrayLoader.php on line 338
+[06-Apr-2022 13:07:34 UTC] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 20480 bytes) in phar:///opt/cpanel/composer/bin/composer/src/Composer/Package/Loader/ArrayLoader.php on line 338
+[06-Apr-2022 13:09:02 UTC] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 20480 bytes) in phar:///opt/cpanel/composer/bin/composer/src/Composer/Package/Loader/ArrayLoader.php on line 338
+[06-Apr-2022 13:13:04 UTC] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 20480 bytes) in phar:///opt/cpanel/composer/bin/composer/src/Composer/Package/Loader/ArrayLoader.php on line 338
+[06-Apr-2022 13:16:59 UTC] PHP Fatal error:  Class UpdateHelper\ComposerPlugin contains 2 abstract methods and must therefore be declared abstract or implement the remaining methods (Composer\Plugin\PluginInterface::deactivate, Composer\Plugin\PluginInterface::uninstall) in /home/adminstrick/admin.stricklands.com/vendor/kylekatarnls/update-helper/src/UpdateHelper/ComposerPlugin.php on line 11
+[06-Apr-2022 13:17:17 UTC] PHP Fatal error:  Class UpdateHelper\ComposerPlugin contains 2 abstract methods and must therefore be declared abstract or implement the remaining methods (Composer\Plugin\PluginInterface::deactivate, Composer\Plugin\PluginInterface::uninstall) in /home/adminstrick/admin.stricklands.com/vendor/kylekatarnls/update-helper/src/UpdateHelper/ComposerPlugin.php on line 11
+[06-Apr-2022 13:17:35 UTC] PHP Fatal error:  Class UpdateHelper\ComposerPlugin contains 2 abstract methods and must therefore be declared abstract or implement the remaining methods (Composer\Plugin\PluginInterface::deactivate, Composer\Plugin\PluginInterface::uninstall) in /home/adminstrick/admin.stricklands.com/vendor/kylekatarnls/update-helper/src/UpdateHelper/ComposerPlugin.php on line 11
+[06-Apr-2022 13:18:22 UTC] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 20480 bytes) in phar:///opt/cpanel/composer/bin/composer/src/Composer/Package/Loader/ArrayLoader.php on line 338
+[06-Apr-2022 13:32:27 UTC] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 20480 bytes) in phar:///opt/cpanel/composer/bin/composer/src/Composer/Repository/ComposerRepository.php on line 805
+[06-Apr-2022 13:37:56 UTC] PHP Fatal error:  Allowed memory size of 33554432 bytes exhausted (tried to allocate 20480 bytes) in phar:///opt/cpanel/composer/bin/composer/src/Composer/Repository/ComposerRepository.php on line 805
+[06-Apr-2022 16:51:40 UTC] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Application' not found in /home/adminstrick/admin.stricklands.com/bootstrap/app.php:14
+Stack trace:
+#0 /home/adminstrick/admin.stricklands.com/artisan(20): require_once()
+#1 {main}
+  thrown in /home/adminstrick/admin.stricklands.com/bootstrap/app.php on line 14
+[06-Apr-2022 16:51:52 UTC] PHP Fatal error:  Uncaught Error: Class 'Illuminate\Foundation\Application' not found in /home/adminstrick/admin.stricklands.com/bootstrap/app.php:14
+Stack trace:
+#0 /home/adminstrick/admin.stricklands.com/artisan(20): require_once()
+#1 {main}
+  thrown in /home/adminstrick/admin.stricklands.com/bootstrap/app.php on line 14
+[06-Apr-2022 17:10:45 UTC] PHP Warning:  ini_set() has been disabled for security reasons in /home/adminstrick/admin.stricklands.com/vendor/vlucas/phpdotenv/src/Loader.php on line 172
+[06-Apr-2022 17:10:45 UTC] PHP Warning:  ini_set() has been disabled for security reasons in /home/adminstrick/admin.stricklands.com/vendor/vlucas/phpdotenv/src/Loader.php on line 174
+[06-Apr-2022 17:12:03 UTC] PHP Warning:  ini_set() has been disabled for security reasons in /home/adminstrick/admin.stricklands.com/vendor/vlucas/phpdotenv/src/Loader.php on line 172
+[06-Apr-2022 17:12:03 UTC] PHP Warning:  ini_set() has been disabled for security reasons in /home/adminstrick/admin.stricklands.com/vendor/vlucas/phpdotenv/src/Loader.php on line 174
+[06-Apr-2022 17:21:26 UTC] PHP Warning:  ini_set() has been disabled for security reasons in /home/adminstrick/admin.stricklands.com/vendor/vlucas/phpdotenv/src/Loader.php on line 172
+[06-Apr-2022 17:21:26 UTC] PHP Warning:  ini_set() has been disabled for security reasons in /home/adminstrick/admin.stricklands.com/vendor/vlucas/phpdotenv/src/Loader.php on line 174
+[06-Apr-2022 17:25:12 UTC] PHP Warning:  ini_set() has been disabled for security reasons in /home/adminstrick/admin.stricklands.com/vendor/vlucas/phpdotenv/src/Loader.php on line 172
+[06-Apr-2022 17:25:12 UTC] PHP Warning:  ini_set() has been disabled for security reasons in /home/adminstrick/admin.stricklands.com/vendor/vlucas/phpdotenv/src/Loader.php on line 174
+[06-Apr-2022 17:25:46 UTC] PHP Warning:  ini_set() has been disabled for security reasons in /home/adminstrick/admin.stricklands.com/vendor/vlucas/phpdotenv/src/Loader.php on line 172
+[06-Apr-2022 17:25:46 UTC] PHP Warning:  ini_set() has been disabled for security reasons in /home/adminstrick/admin.stricklands.com/vendor/vlucas/phpdotenv/src/Loader.php on line 174
+[06-Apr-2022 17:25:57 UTC] PHP Warning:  ini_set() has been disabled for security reasons in /home/adminstrick/admin.stricklands.com/vendor/vlucas/phpdotenv/src/Loader.php on line 172
+[06-Apr-2022 17:25:57 UTC] PHP Warning:  ini_set() has been disabled for security reasons in /home/adminstrick/admin.stricklands.com/vendor/vlucas/phpdotenv/src/Loader.php on line 174
+[06-Apr-2022 17:27:01 UTC] PHP Warning:  ini_set() has been disabled for security reasons in /home/adminstrick/admin.stricklands.com/vendor/vlucas/phpdotenv/src/Loader.php on line 172
+[06-Apr-2022 17:27:01 UTC] PHP Warning:  ini_set() has been disabled for security reasons in /home/adminstrick/admin.stricklands.com/vendor/vlucas/phpdotenv/src/Loader.php on line 174
+[06-Apr-2022 17:28:25 UTC] PHP Warning:  ini_set() has been disabled for security reasons in /home/adminstrick/admin.stricklands.com/vendor/vlucas/phpdotenv/src/Loader.php on line 172
+[06-Apr-2022 17:28:25 UTC] PHP Warning:  ini_set() has been disabled for security reasons in /home/adminstrick/admin.stricklands.com/vendor/vlucas/phpdotenv/src/Loader.php on line 174
+[06-Apr-2022 17:28:57 UTC] PHP Warning:  ini_set() has been disabled for security reasons in /home/adminstrick/admin.stricklands.com/vendor/vlucas/phpdotenv/src/Loader.php on line 172
+[06-Apr-2022 17:28:57 UTC] PHP Warning:  ini_set() has been disabled for security reasons in /home/adminstrick/admin.stricklands.com/vendor/vlucas/phpdotenv/src/Loader.php on line 174
+[06-Apr-2022 17:30:49 UTC] PHP Warning:  ini_set() has been disabled for security reasons in /home/adminstrick/admin.stricklands.com/vendor/vlucas/phpdotenv/src/Loader.php on line 172
+[06-Apr-2022 17:30:49 UTC] PHP Warning:  ini_set() has been disabled for security reasons in /home/adminstrick/admin.stricklands.com/vendor/vlucas/phpdotenv/src/Loader.php on line 174
+[06-Apr-2022 17:32:42 UTC] PHP Warning:  ini_set() has been disabled for security reasons in /home/adminstrick/admin.stricklands.com/vendor/vlucas/phpdotenv/src/Loader.php on line 172
+[06-Apr-2022 17:32:42 UTC] PHP Warning:  ini_set() has been disabled for security reasons in /home/adminstrick/admin.stricklands.com/vendor/vlucas/phpdotenv/src/Loader.php on line 174
+[06-Apr-2022 17:34:31 UTC] PHP Warning:  ini_set() has been disabled for security reasons in /home/adminstrick/admin.stricklands.com/vendor/vlucas/phpdotenv/src/Loader.php on line 172
+[06-Apr-2022 17:34:31 UTC] PHP Warning:  ini_set() has been disabled for security reasons in /home/adminstrick/admin.stricklands.com/vendor/vlucas/phpdotenv/src/Loader.php on line 174
+[06-Apr-2022 17:36:39 UTC] PHP Warning:  ini_set() has been disabled for security reasons in /home/adminstrick/admin.stricklands.com/vendor/vlucas/phpdotenv/src/Loader.php on line 172
+[06-Apr-2022 17:36:39 UTC] PHP Warning:  ini_set() has been disabled for security reasons in /home/adminstrick/admin.stricklands.com/vendor/vlucas/phpdotenv/src/Loader.php on line 174
+[06-Apr-2022 17:40:38 UTC] PHP Warning:  ini_set() has been disabled for security reasons in /home/adminstrick/admin.stricklands.com/vendor/vlucas/phpdotenv/src/Loader.php on line 172
+[06-Apr-2022 17:40:38 UTC] PHP Warning:  ini_set() has been disabled for security reasons in /home/adminstrick/admin.stricklands.com/vendor/vlucas/phpdotenv/src/Loader.php on line 174
+[06-Apr-2022 17:49:51 UTC] PHP Warning:  ini_set() has been disabled for security reasons in /home/adminstrick/admin.stricklands.com/vendor/vlucas/phpdotenv/src/Loader.php on line 172
+[06-Apr-2022 17:49:51 UTC] PHP Warning:  ini_set() has been disabled for security reasons in /home/adminstrick/admin.stricklands.com/vendor/vlucas/phpdotenv/src/Loader.php on line 174
+[06-Apr-2022 17:50:31 UTC] PHP Warning:  ini_set() has been disabled for security reasons in /home/adminstrick/admin.stricklands.com/vendor/vlucas/phpdotenv/src/Loader.php on line 172
+[06-Apr-2022 17:50:31 UTC] PHP Warning:  ini_set() has been disabled for security reasons in /home/adminstrick/admin.stricklands.com/vendor/vlucas/phpdotenv/src/Loader.php on line 174
+[06-Apr-2022 17:50:59 UTC] PHP Warning:  ini_set() has been disabled for security reasons in /home/adminstrick/admin.stricklands.com/vendor/vlucas/phpdotenv/src/Loader.php on line 172
+[06-Apr-2022 17:50:59 UTC] PHP Warning:  ini_set() has been disabled for security reasons in /home/adminstrick/admin.stricklands.com/vendor/vlucas/phpdotenv/src/Loader.php on line 174
+[06-Apr-2022 17:56:27 UTC] PHP Warning:  ini_set() has been disabled for security reasons in /home/adminstrick/admin.stricklands.com/vendor/vlucas/phpdotenv/src/Loader.php on line 172
+[06-Apr-2022 17:56:27 UTC] PHP Warning:  ini_set() has been disabled for security reasons in /home/adminstrick/admin.stricklands.com/vendor/vlucas/phpdotenv/src/Loader.php on line 174
+[06-Apr-2022 17:56:46 UTC] PHP Warning:  ini_set() has been disabled for security reasons in /home/adminstrick/admin.stricklands.com/vendor/vlucas/phpdotenv/src/Loader.php on line 172
+[06-Apr-2022 17:56:46 UTC] PHP Warning:  ini_set() has been disabled for security reasons in /home/adminstrick/admin.stricklands.com/vendor/vlucas/phpdotenv/src/Loader.php on line 174

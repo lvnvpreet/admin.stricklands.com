@@ -1,0 +1,35 @@
+@charset "utf-8";
+/* CSS Document */
+.body {
+	background-color: #CCC;
+}
+.capitalize {
+	text-transform: capitalize;	
+}
+.table {
+	background-color: #FFF;
+	color: #333;
+	font-family: Tahoma, Geneva, sans-serif;
+	font-size: 9px;
+	border: 2px solid #CCC;
+}
+.tablecell {
+	background-color: #FFF;
+	color: #333;
+	padding: 4px;
+}
+.trclassbar {
+	border-top-width: thin;
+	border-right-width: thin;
+	border-bottom-width: thin;
+	border-left-width: thin;
+	border-top-style: none;
+	border-right-style: none;
+	border-bottom-style: solid;
+	border-left-style: none;
+	border-top-color: #333;
+	border-right-color: #333;
+	border-bottom-color: #333;
+	border-left-color: #333;
+}
+

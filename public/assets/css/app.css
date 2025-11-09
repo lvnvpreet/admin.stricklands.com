@@ -1,0 +1,47 @@
+@import url("bootstrap-extended.css");
+@import url("colors.css");
+@import url("components.css");
+
+.navbar{ border: none;}
+.panel-default > .panel-heading{ background: #fff;}
+
+.table-bordered > tbody > tr > th, .table-bordered > tfoot > tr > th, .table-bordered > thead > tr > td, .table-bordered > tbody > tr > td, .table-bordered > tfoot > tr > td{
+    font-size: 12px;
+}
+.modal-body .infoframe{ line-height: 28px;}
+.modal-body .infoframe h3{ border-bottom: 1px solid #666666; font-weight: bold; padding-bottom: 10px;}
+.modal-header{ float: left; width: 100%; margin-bottom: 10px; padding-bottom: 5px;}
+.main-menu.menu-dark .navigation > li.open .active > a{ background: #344054;}
+.tab-pane { padding: 15px;}
+.list-by-location .col-md-4 img{
+/*     height: 135px;
+    width: 118px; */
+}
+.select2-results__option{ font-size: 12px; padding: 6px 4px !important;}
+.top-search{ font-size: 12px;}
+.top-search .form-control{ height: 40px;}
+div.dataTables_wrapper div.dataTables_filter label{ margin-top: 0px;}
+div.dataTables_wrapper div.dataTables_length label{ margin-top: 7px;}
+.tab-content.list-by-location .col-md-8 p{ font-size: 13px;}
+.avatar-edit{ width: 180px; margin-left:24%; margin-top: 20px; margin-bottom: 20px;}
+#change-picture{
+    margin-bottom: 30px;
+}
+.collapse.show{ visibility: visible;}
+.input-group-addon {
+    background-color:#EEEEEE;
+    border:1px solid #CCCCCC;
+    border-radius:4px;
+    color:#555555;
+    font-size:14px;
+    font-weight:400;
+    line-height:1;
+    padding:6px 12px !important;
+    text-align:center;
+    width: auto !important;
+}
+
+.card-text img{
+    max-width: 100%;
+    height: auto;
+}

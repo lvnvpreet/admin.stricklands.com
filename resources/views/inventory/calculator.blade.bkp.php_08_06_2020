@@ -1,0 +1,78 @@
+@extends('layouts.app')
+
+@section('page-title', trans('app.dashboard'))
+
+@section('content')
+
+    <div class="row" style="margin-top: 20px;">
+        <div class="col-4">
+            <div id="calculator_1" class="panel panel-default panel-table">
+                <div class="panel-heading">
+                    Finance Programs
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-6">Sticker Price</div>
+                        <div class="col-6">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-usd"></i></span>
+                                <input id="sticker_price" type="text" class="form-control" placeholder="Sticker Price">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top: 5px;">
+                        <div class="col-6">Additions</div>
+                        <div class="col-6">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-usd"></i></span>
+                                <input id="additions" type="text" class="form-control" placeholder="Additions">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top: 30px;">
+                        <div class="col-6">Be Safe</div>
+                        <div class="col-6">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-usd"></i></span>
+                                <input id="be_safe" type="text" class="form-control" placeholder="Be Safe">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top: 5px;">
+                        <div class="col-6">PPSA</div>
+                        <div class="col-6">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-usd"></i></span>
+                                <input id="ppsa" type="text" class="form-control" placeholder="PPSA">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row" style="margin-top: 5px;">
+                        <div class="col-6">Licence</div>
+                        <div class="col-6">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="glyphicon glyphicon-usd"></i></span>
+                                <input id="licence" type="text" class="form-control" placeholder="Licence">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+    </div>
+
+@stop
+
+@section('top-scripts')
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+@endsection
+
+@section('scripts')
+    <script>
+
+
+
+    </script>
+@stop
