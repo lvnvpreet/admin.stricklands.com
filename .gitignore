@@ -19,5 +19,3 @@ yarn-error.log
 .DS_Store
 
 # Ignore large files that cause GitHub push rejection
-/adminstr_website.sql
-/public/WHMIS2015GHS.mpg
